@@ -50,7 +50,10 @@ class RegisterService
         if ($this->isValid()) {
             $user = new User();
             $user->setNick($nick)
-                ->setPassword($this->userPasswordHasher->hashPassword($user, $password));
+                ->setPassword(
+                    $this->userPasswordHasher
+                        ->hashPassword($user, $password)
+                );
             $this->user = $user;
 
             return true;

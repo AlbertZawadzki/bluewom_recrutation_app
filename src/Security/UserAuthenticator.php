@@ -29,15 +29,21 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $this->urlGenerator = $urlGenerator;
     }
 
+    public function supports(Request $request): bool
+    {
+        return $request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo();
+    }
+
     public function authenticate(Request $request): PassportInterface
     {
-        $id = $request->request->get('id', '');
+        $nick = $request->request->get('nick', '');
+        $password = $request->request->get('password', '');
 
-        $request->getSession()->set(Security::LAST_USERNAME, $id);
+        $request->getSession()->set(Security::LAST_USERNAME, $nick);
 
         return new Passport(
-            new UserBadge($id),
-            new PasswordCredentials($request->request->get('password', '')),
+            new UserBadge($nick),
+            new PasswordCredentials($password),
             [
                 new CsrfTokenBadge('authenticate', $request->get('_csrf_token')),
             ]
