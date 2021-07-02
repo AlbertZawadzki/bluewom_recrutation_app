@@ -3,8 +3,53 @@
 {% block title %}Główna{% endblock %}
 
 {% block body %}
-    <h2>Witaj {{ app.user.nick }}!</h2>
+    <h1>Witaj {{ app.user.nick }}!</h1>
     <div data-controller="currencies">
-
+        {% if userCurrencies|length > 0 %}
+            <div class="currency-lister-wrapper">
+                <h2 class="currency-lister-title">Twoje waluty ({{ userCurrencies|length }})</h2>
+                <div class="currency-lister">
+                    {% for userCurrency in userCurrencies %}
+                        {% include 'components/single-currency.html.twig' with {
+                            id : userCurrency.id,
+                            code : userCurrency.code,
+                            name : userCurrency.name,
+                            rate : userCurrency.rate,
+                            updatedAt : userCurrency.updatedAt
+                        } %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="currency-lister-wrapper missing">
+                <h2 class="currency-lister-title">Brak śledzonych walut</h2>
+                <div class="currency-lister">
+                    Nie śledzisz jeszcze żadnych walut, poniżej masz waluty które możesz śledzić
+                </div>
+            </div>
+        {% endif %}
+        {% if currencies|length > 0 %}
+            <div class="currency-lister-wrapper">
+                <h2 class="currency-lister-title">Waluty do śledzenia ({{ currencies|length }})</h2>
+                <div class="currency-lister">
+                    {% for currency in currencies %}
+                        {% include 'components/single-currency.html.twig' with {
+                            id : currency.id,
+                            code : currency.code,
+                            name : currency.name,
+                            rate : currency.rate,
+                            updatedAt : currency.updatedAt
+                        } %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="currency-lister-wrapper missing">
+                <h2 class="currency-lister-title">Brak walut</h2>
+                <div class="currency-lister">
+                    Coś poszło nie tak...
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

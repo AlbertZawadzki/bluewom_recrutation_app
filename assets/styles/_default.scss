@@ -13,24 +13,12 @@ html {
 
 body {
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
   font-size: 1rem;
   font-weight: 500;
 
   @include mobileMax {
     overflow-y: auto;
-  }
-}
-
-#root {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-
-  @include mobileMax {
-    overflow-y: auto;
-    height: initial;
-    min-height: 100vh;
   }
 }
 

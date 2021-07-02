@@ -26,21 +26,25 @@ class CurrenciesService
         $today = (new DateTime());
         $todayString = (new DateTime())->format('Y-m-d');
 
-        if ($currencies === [] || $currencies[0]->getUpdatedAt()->format('Y-m-d') !== $todayString) {
-            $currencies = $this->NBPFetcher->fetch()['rates'] ?? [];
-
-            foreach ($currencies as $currencyData) {
-                $currency = $this->currencyRepository->findByCode($currencyData['code']) ?? new Currency();
-                $currency->setCode($currencyData['code'])
-                    ->setName(ucfirst($currencyData['currency']))
-                    ->setRate($currencyData['mid'])
-                    ->setUpdatedAt($today);
-                $this->em->persist($currency);
-            }
-
-            $this->em->flush();
+        // Currencies are up to date
+        if ($currencies !== [] && $currencies[0]->getUpdatedAt()->format('Y-m-d') === $todayString) {
+            return $currencies;
         }
 
-        return $currencies;
+        // Currencies are outdated - fetch them
+        $currencies = $this->NBPFetcher->fetch()['rates'] ?? [];
+
+        foreach ($currencies as $currencyData) {
+            $currency = $this->currencyRepository->findByCode($currencyData['code']) ?? new Currency();
+            $currency->setCode($currencyData['code'])
+                ->setName(ucfirst($currencyData['currency']))
+                ->setRate($currencyData['mid'])
+                ->setUpdatedAt($today);
+            $this->em->persist($currency);
+        }
+
+        $this->em->flush();
+
+        return $this->currencyRepository->findAll();
     }
 }
