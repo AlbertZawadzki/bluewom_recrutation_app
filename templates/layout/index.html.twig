@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width"/>
     {% block stylesheets %}
-         {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
     {% block javascripts %}
-         {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
 <body>
 <nav class="menu">
     {% if app.user %}
-        <button>
-            Wyloguj się ({{ app.user.nick }})
-        </button>
+        <form method="post" action="{{ path('app_logout') }}">
+            <button type="submit" class="logout-button">
+                Wyloguj się ({{ app.user.nick }})
+            </button>
+        </form>
     {% endif %}
 </nav>
 <main class="site-wrapper">

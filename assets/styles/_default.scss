@@ -1,61 +1,75 @@
 html {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 * {
-    text-decoration: none;
-    transition: background-color 0.25s, border-color 0.25s, opacity 0.25s, box-shadow 0.25s;
-    outline: none;
-    font-family: PoppinsLight, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  text-decoration: none;
+  transition: background-color 0.25s, border-color 0.25s, opacity 0.25s, box-shadow 0.25s;
+  outline: none;
+  font-family: PoppinsLight, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
 }
 
 body {
-    margin: 0;
-    overflow: hidden;
-    font-size: 1rem;
-    font-weight: 500;
+  margin: 0;
+  overflow: hidden;
+  font-size: 1rem;
+  font-weight: 500;
 
-    @include mobileMax {
-        overflow-y: auto;
-    }
+  @include mobileMax {
+    overflow-y: auto;
+  }
 }
 
 #root {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 
-    @include mobileMax {
-        overflow-y: auto;
-        height: initial;
-        min-height: 100vh;
-    }
+  @include mobileMax {
+    overflow-y: auto;
+    height: initial;
+    min-height: 100vh;
+  }
 }
 
 a,
 #root {
-    @include themify {
-        background-color: themed('colorMain');
-        color: themed('colorMainContrast');
-    }
+  @include themify {
+    background-color: themed('colorMain');
+    color: themed('colorMainContrast');
+  }
 }
 
 svg {
-    transition: color 0.1s;
+  transition: color 0.1s;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-    font-weight: normal;
-    text-indent: 5px;
+  margin: 0;
+  font-weight: normal;
+  text-indent: 5px;
 
-    @include themify {
-        border-bottom: 1px solid themed($colorMainContrast);
-    }
+  @include themify {
+    border-bottom: 1px solid themed($colorMainContrast);
+  }
 
-    &.no-border {
-        border: 0;
-    }
+  &.no-border {
+    border: 0;
+  }
+}
+
+.site-wrapper {
+  min-height: calc(100vh - 50px);
+  position: relative;
+  width: clamp(300px, 100vw, 1200px);
+  margin: 0 auto;
+}
+
+.button {
+  padding: 3px 8px 2px;
+  border-radius: 5px;
+  border: 1px solid $colorSilver;
+  cursor: pointer;
 }

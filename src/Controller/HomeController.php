@@ -13,6 +13,6 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('security/index.html.twig', ['last_username' => 'BUMBUM', 'error' => null]);
+        return $this->render('home/index.html.twig');
     }
 }

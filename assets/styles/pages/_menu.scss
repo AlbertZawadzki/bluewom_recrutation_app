@@ -1,0 +1,20 @@
+.menu {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 40px;
+  display: flex;
+  background: $colorBlue;
+  justify-content: flex-end;
+  box-shadow: 0 0 5px 1px rgba($colorBlack, 0.5);
+}
+
+.logout-button {
+  @extend .button;
+  height: 30px;
+  margin: 5px;
+
+  &:hover {
+    background: $colorOrange;
+  }
+}

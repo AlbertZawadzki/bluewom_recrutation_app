@@ -20,21 +20,21 @@
 .register-page-form-wrapper {
   display: flex;
   flex-direction: column;
-  padding: 20px 30px 20px 50px;
+  padding: 20px 30px;
+
+  @include tabletMin {
+    padding: 20px 30px 20px 50px;
+  }
 }
 
 .login-page-form-wrapper {
   @extend .register-page-form-wrapper;
-  padding: 20px 50px 20px 30px;
+  border-bottom: 1px solid $colorSilver;
 
-  &:first-of-type {
-    border-bottom: 1px solid $colorSilver;
-    border-right: 0;
-
-    @include tabletMin {
-      border-right: 1px solid $colorSilver;
-      border-bottom: 0;
-    }
+  @include tabletMin {
+    border-right: 1px solid $colorSilver;
+    border-bottom: 0;
+    padding: 20px 50px 20px 30px;
   }
 }
 
@@ -78,11 +78,8 @@
 }
 
 .submit-button {
-  padding: 3px 8px 2px;
+  @extend .button;
   margin: 20px 0 0 auto;
-  border-radius: 5px;
-  border: 1px solid $colorSilver;
-  cursor: pointer;
 
   &:hover {
     background: rgba($colorSuccess, 0.75);
