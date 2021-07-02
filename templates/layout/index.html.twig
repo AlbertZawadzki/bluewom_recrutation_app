@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+         {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+         {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<nav class="menu">
+    {% if app.user %}
+        <button>
+            Wyloguj się ({{ app.user.nick }})
+        </button>
+    {% endif %}
+</nav>
+<main class="site-wrapper">
+    {% block body %}{% endblock %}
+</main>
+</body>
+</html>

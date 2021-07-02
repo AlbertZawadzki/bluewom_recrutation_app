@@ -1,3 +1,16 @@
-body {
-    background-color: lightgray;
-}
+/** Fixed import order alfa group */
+@import "vars";
+@import "themes";
+@import "media";
+
+/** Alphabetical beta group order */
+@import "animations";
+@import "fonts";
+@import "scrollbars";
+
+/** Gamma group */
+@import "default";
+@import "global";
+
+/** Delta group */
+@import "pages/index";

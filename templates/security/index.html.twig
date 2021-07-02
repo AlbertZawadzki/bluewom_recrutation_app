@@ -1,0 +1,12 @@
+{% extends 'layout/index.html.twig' %}
+
+{% block title %}Logowanie{% endblock %}
+
+{% block body %}
+    <div class="login-page-wrapper">
+        <div class="login-page-inner-wrapper">
+            {% include 'security/login.html.twig' %}
+            {% include 'security/register.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

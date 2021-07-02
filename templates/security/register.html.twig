@@ -1,0 +1,43 @@
+<form method="post" action="{{ path('app_register') }}" class="register-page-form-wrapper">
+    <h2 class="login-page-form-title">lub zarejestruj</h2>
+
+    <div class="login-page-input-wrapper">
+        <label for="register-nick" class="login-page-input-label">Nick</label>
+        <input
+                type="text"
+                value="{{ last_username ?? "" }}"
+                name="id"
+                id="register-nick"
+                class="login-page-input"
+                required
+        >
+    </div>
+
+    <div class="login-page-input-wrapper">
+        <label for="register-password" class="login-page-input-label">Hasło</label>
+        <input
+                type="password"
+                name="password"
+                id="register-password"
+                class="login-page-input"
+                required
+        >
+    </div>
+
+    <div class="login-page-input-wrapper">
+        <label for="register-password-repeat" class="login-page-input-label">Powtórz hasło</label>
+        <input
+                type="password"
+                name="password-repeat"
+                id="register-password-repeat"
+                class="login-page-input"
+                required
+        >
+    </div>
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+    <button class="submit-button" type="submit">
+        Zarejestruj się
+    </button>
+</form>

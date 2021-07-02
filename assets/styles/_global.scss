@@ -1,0 +1,19 @@
+.flex {
+    display: flex;
+
+    &.column {
+        flex-direction: column;
+    }
+
+    @include mobileMax() {
+        flex-direction: column;
+    }
+}
+
+.hidden {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: -1;
+}

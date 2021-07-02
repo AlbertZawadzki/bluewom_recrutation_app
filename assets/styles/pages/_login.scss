@@ -1,0 +1,84 @@
+.login-page-wrapper {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-page-inner-wrapper {
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  box-shadow: 0 0 3px 1px rgba($colorBlack, 0.25);
+
+  @include mobileMax {
+    flex-direction: column;
+  }
+}
+
+.register-page-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px 20px 50px;
+}
+
+.login-page-form-wrapper {
+  @extend .register-page-form-wrapper;
+  padding: 20px 50px 20px 30px;
+
+  &:first-of-type {
+    border-bottom: 1px solid $colorSilver;
+    border-right: 0;
+
+    @include tabletMin {
+      border-right: 1px solid $colorSilver;
+      border-bottom: 0;
+    }
+  }
+}
+
+.login-page-input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-page-form-title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.login-page-input-label {
+  margin-top: 5px;
+
+  .error & {
+    color: $colorRed;
+  }
+}
+
+.login-page-input {
+  border-radius: 5px;
+  border: 1px solid $colorSilver;
+  box-sizing: border-box;
+  padding: 3px 5px 2px;
+
+  .error & {
+    border-color: $colorRed;
+  }
+
+  &:focus {
+    border-color: $colorBlack;
+  }
+}
+
+.submit-button {
+  padding: 3px 8px 2px;
+  margin: 20px 0 0 auto;
+  border-radius: 5px;
+  border: 1px solid $colorSilver;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba($colorSuccess, 0.75);
+  }
+}

@@ -58,18 +58,14 @@ Encore
     // enables Sass/SCSS support
     .enableSassLoader()
 
-    // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
-
-    // uncomment if you use React
-    //.enableReactPreset()
-
-    // uncomment to get integrity="..." attributes on your script & link tags
-    // requires WebpackEncoreBundle 1.4 or higher
-    //.enableIntegrityHashes(Encore.isProduction())
-
-    // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    // Copy fonts
+    .copyFiles({
+        from: "./assets/fonts",
+        // if versioning is enabled, add the file hash too
+        to: "fonts/[path][name].[ext]",
+        // only copy files matching this pattern
+        pattern: /\.(ttf)$/,
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

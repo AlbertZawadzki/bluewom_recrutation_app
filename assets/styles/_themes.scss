@@ -1,0 +1,40 @@
+$themes: (
+        light: (
+                colorMain: $colorThemeLight,
+                colorMainDarker: $colorThemeLightDarker,
+                colorMainContrast: $colorThemeDark,
+                colorMainContrastDarker: $colorThemeDarkDarker,
+                colorMainBlue:$colorBlue,
+        ),
+        dark: (
+                colorMain: $colorThemeDark,
+                colorMainDarker: $colorThemeDarkDarker,
+                colorMainContrast: $colorThemeLight,
+                colorMainContrastDarker: $colorThemeLightDarker,
+                colorMainBlue:$colorLightBlue,
+        ),
+);
+
+@mixin themify() {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
+
+$colorMain: "colorMain";
+$colorMainContrast: "colorMainContrast";
+$colorMainDarker: "colorMainDarker";
+$colorMainContrastDarker: "colorMainContrastDarker";
+$colorMainBlue: "colorMainBlue";
