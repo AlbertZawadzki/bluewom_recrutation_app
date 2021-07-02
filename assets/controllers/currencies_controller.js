@@ -26,7 +26,7 @@ export default class extends Controller {
                 this.userCurrencies.innerHTML = outcome.data.html.content;
                 this.userCurrencies.parentElement.classList.remove('missing');
                 this.userCurrencies.parentElement.childNodes[1].innerHTML = 'Twoje waluty:' +
-                    `<form method="post">
+                    `<form method="post" action="/reset">
                         <label class="delete-all-currencies-icon">
                             <input type="submit" class="hidden"/>
                             <i class="fas fa-trash-alt"></i>
@@ -42,6 +42,8 @@ export default class extends Controller {
             parent.setAttribute('data-action', 'click->currencies#actionRemoveCurrency');
             parent.classList.remove('add');
             parent.classList.add('remove');
+        } else {
+            console.error(outcome)
         }
     }
 
@@ -121,6 +123,8 @@ export default class extends Controller {
                     break;
                 }
             }
+        } else {
+            console.error(outcome)
         }
     }
 }

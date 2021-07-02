@@ -9,7 +9,7 @@
             <div class="currency-lister-wrapper">
                 <h2 class="currency-lister-title">
                     Twoje waluty:
-                    <form method="post">
+                    <form method="post" action="{{ path('remove_user_currencies') }}">
                         <label class="delete-all-currencies-icon">
                             <input type="submit" class="hidden"/>
                             <i class="fas fa-trash-alt"></i>

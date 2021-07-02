@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="home", methods={"GET", "POST"})
+     * @Route("/", name="home", methods={"GET"})
      */
     public function index(Request $request, CurrenciesService $currenciesService): Response
     {
@@ -38,5 +38,25 @@ class HomeController extends AbstractController
                 'userCurrencies' => $userCurrencies
             ]
         );
+    }
+
+    /**
+     * @Route("/reset", name="remove_user_currencies", methods={"POST"})
+     */
+    public function reset(Request $request): Response
+    {
+        /** @var ?User $user */
+        $user = $this->getUser();
+
+        if ($request->isMethod('POST') && $user) {
+            foreach ($user->getFavouriteCurrencies() as $currency) {
+                $user->removeFavouriteCurrency($currency);
+            }
+
+            $this->getDoctrine()->getManager()->persist($user);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        return $this->redirectToRoute('home');
     }
 }
