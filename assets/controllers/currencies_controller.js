@@ -25,10 +25,13 @@ export default class extends Controller {
             if (this.userCurrencies.childNodes.length < 2) {
                 this.userCurrencies.innerHTML = outcome.data.html.content;
                 this.userCurrencies.parentElement.classList.remove('missing');
-                this.userCurrencies.parentElement.childNodes[1].innerHTML = 'Twoje waluty:\n' +
-                    '                    <div class="delete-all-currencies-icon">\n' +
-                    '                        <i class="fas fa-trash-alt"></i>\n' +
-                    '                    </div>';
+                this.userCurrencies.parentElement.childNodes[1].innerHTML = 'Twoje waluty:' +
+                    `<form method="post">
+                        <label class="delete-all-currencies-icon">
+                            <input type="submit" class="hidden"/>
+                            <i class="fas fa-trash-alt"></i>
+                        </label>
+                    </form>`;
             } else {
                 this.userCurrencies.innerHTML += outcome.data.html.content;
             }
