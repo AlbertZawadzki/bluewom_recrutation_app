@@ -1,16 +1,24 @@
-{% set id = id ?? '' %}
-{% set code = code ?? '' %}
-{% set name = name ?? '' %}
-{% set rate = rate ?? '' %}
-{% set updatedAt = updatedAt ?? false %}
+{% set id = id ?? currency.id ?? '' %}
+{% set code = code ?? currency.code ?? '' %}
+{% set name = name ?? currency.name ?? '' %}
+{% set rate = rate ?? currency.rate ?? '' %}
+{% set updatedAt = updatedAt ?? currency.updatedAt ?? false %}
 
 <div class="currency-item-wrapper">
     {% if  app.user.hasFavouriteCurrency(id) %}
-        <div class="action-currency-icon remove">
+        <div
+                class="action-currency-icon remove"
+                data-action="click->currencies#actionRemoveCurrency"
+                data-id="{{ id }}"
+        >
             <i class="far fa-times-circle"></i>
         </div>
     {% else %}
-        <div class="action-currency-icon add">
+        <div
+                class="action-currency-icon add"
+                data-action="click->currencies#actionAddCurrency"
+                data-id="{{ id }}"
+        >
             <i class="fas fa-plus-circle"></i>
         </div>
     {% endif %}
