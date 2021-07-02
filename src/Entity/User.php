@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
+use App\Dictionary\RolesDictionary;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use RolesDictionary;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 

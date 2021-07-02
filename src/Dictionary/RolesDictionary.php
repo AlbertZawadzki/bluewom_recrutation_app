@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Dictionary;
 
 abstract class RolesDictionary
 {
