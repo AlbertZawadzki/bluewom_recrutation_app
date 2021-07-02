@@ -36,4 +36,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
+
+    public function getUserByNick(string $nick)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.nick = :nick')
+            ->setParameter(':nick', $nick)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
 }
