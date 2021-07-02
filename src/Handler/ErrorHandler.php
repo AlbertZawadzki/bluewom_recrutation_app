@@ -1,16 +1,21 @@
 <?php
 
-namespace App\Traits;
+namespace App\Handler;
 
 use App\Model\ErrorModel;
 
-trait Validator
+trait ErrorHandler
 {
     private iterable $errors = [];
 
-    public function addError(string $field, string $message): void
+    public function addFieldError(string $field, string $message): void
     {
         $this->errors[] = new ErrorModel($field, null, $message);
+    }
+
+    public function addNamedError(string $name, string $message): void
+    {
+        $this->errors[] = new ErrorModel(null, $name, $message);
     }
 
     public function isValid(): bool
