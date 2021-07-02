@@ -1,0 +1,27 @@
+{% set id = id ?? '' %}
+{% set name = name ?? '' %}
+{% set title = title ?? '' %}
+{% set error = error ?? false %}
+{% set value = value ?? '' %}
+{% set errorMessage = errorMessage ?? '' %}
+{% set autocomplete  = autocomplete ?? false %}
+{% set required  = required ?? false %}
+{% set type  = type ?? 'text' %}
+
+<div class="login-page-input-wrapper {{ error ? 'error' : null }}">
+    <label for="{{ id }}" class="login-page-input-label">{{ title }}</label>
+    <input
+            type="{{ type }}"
+            value="{{ value ?? "" }}"
+            name="{{ name }}"
+            id="{{ id }}"
+            class="login-page-input"
+            {{ autocomplete ? 'autocomplete="'~autocomplete~'"' : null }}
+            {{ required ? 'required' : null }}
+    >
+    {% if error %}
+        <span class="login-page-input-error">
+            {{ errorMessage }}
+        </span>
+    {% endif %}
+</div>

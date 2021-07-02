@@ -7,54 +7,36 @@
         </h3>
     {% endif %}
 
-    <div class="login-page-input-wrapper {{ has_field_error(errors ?? [], 'nick') ? 'error' : null }}">
-        <label for="register-nick" class="login-page-input-label">Nick</label>
-        <input
-                type="text"
-                value="{{ register_nick ?? "" }}"
-                name="nick"
-                id="register-nick"
-                class="login-page-input"
-                required
-        >
-        {% if has_field_error(errors ?? [], 'nick') %}
-            <span class="login-page-input-error">
-                {{ get_field_error(errors, 'nick').message }}
-            </span>
-        {% endif %}
-    </div>
+    {% include 'components/login-input.html.twig' with {
+        id:'register-nick',
+        name : 'nick',
+        title : 'Nick',
+        value : register_nick ?? "",
+        error : has_field_error(errors ?? [], 'nick'),
+        errorMessage : (errors ?? []) != [] ? get_field_error(errors, 'nick').message : '',
+        autocomplete : 'current-password',
+        required : true
+    } %}
 
-    <div class="login-page-input-wrapper {{ has_field_error(errors ?? [], 'password') ? 'error' : null }}">
-        <label for="register-password" class="login-page-input-label">Hasło</label>
-        <input
-                type="password"
-                name="password"
-                id="register-password"
-                class="login-page-input"
-                required
-        >
-        {% if has_field_error(errors ?? [], 'password') %}
-            <span class="login-page-input-error">
-                {{ get_field_error(errors, 'password').message }}
-            </span>
-        {% endif %}
-    </div>
+    {% include 'components/login-input.html.twig' with {
+        id:'register-password',
+        name : 'password',
+        title : 'Hasło',
+        error : has_field_error(errors ?? [], 'password'),
+        errorMessage : (errors ?? []) != [] ? get_field_error(errors, 'password').message : '',
+        required : true,
+        type :  'password'
+    } %}
 
-    <div class="login-page-input-wrapper {{ has_field_error(errors ?? [], 'password-repeat') ? 'error' : null }}">
-        <label for="register-password-repeat" class="login-page-input-label">Powtórz hasło</label>
-        <input
-                type="password"
-                name="password-repeat"
-                id="register-password-repeat"
-                class="login-page-input"
-                required
-        >
-        {% if has_field_error(errors ?? [], 'password-repeat') %}
-            <span class="login-page-input-error">
-                {{ get_field_error(errors, 'password-repeat').message }}
-            </span>
-        {% endif %}
-    </div>
+    {% include 'components/login-input.html.twig' with {
+        id:'register-password-repeat',
+        name : 'password-repeat',
+        title : 'Powtórz hasło',
+        error : has_field_error(errors ?? [], 'password-repeat'),
+        errorMessage : (errors ?? []) != [] ? get_field_error(errors, 'password-repeat').message : '',
+        required : true,
+        type :  'password'
+    } %}
 
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 

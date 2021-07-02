@@ -7,40 +7,27 @@
         </h3>
     {% endif %}
 
-    <div class="login-page-input-wrapper {{ (error ?? false) ? 'error' : null }}">
-        <label for="login-nick" class="login-page-input-label">Nick</label>
-        <input
-                type="text"
-                value="{{ login_username ?? "" }}"
-                name="nick"
-                id="login-nick"
-                class="login-page-input"
-                autocomplete="username"
-                required
-        >
-        {% if (error ?? false) %}
-            <span class="login-page-input-error">
-                Niepoprawny login
-            </span>
-        {% endif %}
-    </div>
+    {% include 'components/login-input.html.twig' with {
+        id:'login-nick',
+        name : 'nick',
+        title : 'Nick',
+        value : login_username ?? "",
+        error : (error ?? false),
+        errorMessage : 'Niepoprawny login',
+        autocomplete : 'username',
+        required :  true
+    } %}
 
-    <div class="login-page-input-wrapper {{ (error ?? false) ? 'error' : null }}">
-        <label for="login-password" class="login-page-input-label">Hasło</label>
-        <input
-                type="password"
-                name="password"
-                id="login-password"
-                class="login-page-input"
-                autocomplete="current-password"
-                required
-        >
-        {% if (error ?? false) %}
-            <span class="login-page-input-error">
-                lub hasło
-            </span>
-        {% endif %}
-    </div>
+    {% include 'components/login-input.html.twig' with {
+        id:'login-password',
+        name : 'password',
+        title : 'Hasło',
+        error : (error ?? false),
+        errorMessage : 'lub hasło',
+        autocomplete : 'current-password',
+        required :  true,
+        type :  'password'
+    } %}
 
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
