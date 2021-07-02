@@ -26,7 +26,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $roles = '[' . RolesDictionary::ROLE_USER . ']';
 
     /**
-     * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private string $password;
@@ -53,17 +52,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string)$this->id;
     }
 
-    /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier instead
-     */
     public function getUsername(): string
     {
         return (string)$this->id;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = json_decode($this->roles, true);

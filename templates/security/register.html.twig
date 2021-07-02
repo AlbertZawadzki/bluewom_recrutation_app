@@ -1,7 +1,7 @@
 <form method="post" action="{{ path('app_register') }}" class="register-page-form-wrapper">
     <h2 class="login-page-form-title">lub zarejestruj</h2>
 
-    {% if info_register %}
+    {% if (info_register ?? false) %}
         <h3 class="login-page-form-subtitle">
             {{ info_register }}
         </h3>
