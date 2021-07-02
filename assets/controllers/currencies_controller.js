@@ -25,7 +25,10 @@ export default class extends Controller {
             if (this.userCurrencies.childNodes.length < 2) {
                 this.userCurrencies.innerHTML = outcome.data.html.content;
                 this.userCurrencies.parentElement.classList.remove('missing');
-                this.userCurrencies.parentElement.childNodes[1].innerHTML = 'Twoje waluty:';
+                this.userCurrencies.parentElement.childNodes[1].innerHTML = 'Twoje waluty:\n' +
+                    '                    <div class="delete-all-currencies-icon">\n' +
+                    '                        <i class="fas fa-trash-alt"></i>\n' +
+                    '                    </div>';
             } else {
                 this.userCurrencies.innerHTML += outcome.data.html.content;
             }
@@ -73,7 +76,7 @@ export default class extends Controller {
 
                 if (currencyId === wantedCurrencyId) {
                     node.remove();
-                    if (this.userCurrencies.childNodes.length === 1) {
+                    if (this.userCurrencies.childNodes.length < 3) {
                         this.userCurrencies.innerHTML = 'Nie śledzisz jeszcze żadnych walut, poniżej masz waluty które możesz śledzić';
                         this.userCurrencies.parentElement.classList.add('missing');
                         this.userCurrencies.parentElement.childNodes[1].innerHTML = 'Brak śledzonych walut';
