@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Dictionary\RolesDictionary;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -34,6 +36,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      */
     private string $nick;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Currency::class)
+     */
+    private $favouriteCurrencies;
+
+    public function __construct()
+    {
+        $this->favouriteCurrencies = new ArrayCollection();
+    }
 
     public function getId(): ?string
     {
@@ -102,6 +114,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNick(string $nick): self
     {
         $this->nick = $nick;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Currency[]
+     */
+    public function getFavouriteCurrencies(): Collection
+    {
+        return $this->favouriteCurrencies;
+    }
+
+    public function addFavouriteCurrency(Currency $favouriteCurrencies): self
+    {
+        if (!$this->favouriteCurrencies->contains($favouriteCurrencies)) {
+            $this->favouriteCurrencies[] = $favouriteCurrencies;
+        }
+
+        return $this;
+    }
+
+    public function removeFavouriteCurrency(Currency $favouriteCurrencies): self
+    {
+        $this->favouriteCurrencies->removeElement($favouriteCurrencies);
 
         return $this;
     }
