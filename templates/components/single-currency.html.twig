@@ -4,11 +4,22 @@
 {% set rate = rate ?? '' %}
 {% set updatedAt = updatedAt ?? false %}
 
-<div class="currency-wrapper">
-    <h4 class="currency-title">
-        {{ name }}, średnia: {{ rate }}
-    </h4>
-    <div class="currency-info">
-        Kod: {{ code }}, {{ updatedAt ? 'ostatnia aktualizacja: ' ~ get_stringed_date(updatedAt) : null }}
+<div class="currency-item-wrapper">
+    {% if  app.user.hasFavouriteCurrency(id) %}
+        <div class="action-currency-icon remove">
+            <i class="far fa-times-circle"></i>
+        </div>
+    {% else %}
+        <div class="action-currency-icon add">
+            <i class="fas fa-plus-circle"></i>
+        </div>
+    {% endif %}
+    <div class="currency-wrapper">
+        <h4 class="currency-title">
+            {{ name }}, średnia: {{ rate }}
+        </h4>
+        <div class="currency-info">
+            Kod: {{ code }}, {{ updatedAt ? 'ostatnia aktualizacja: ' ~ get_stringed_date(updatedAt) : null }}
+        </div>
     </div>
 </div>

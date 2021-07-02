@@ -19,7 +19,33 @@
 
 .currency-wrapper {
   width: 100%;
-  height: 60px;
+}
+
+.currency-item-wrapper {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-radius: 5px;
+  margin: 5px 0;
+
+  &:hover {
+    background: $colorThemeLightDarker;
+  }
+}
+
+.action-currency-icon {
+  font-size: 30px;
+  margin: auto 10px auto 15px;
+  cursor: pointer;
+  transition: color 0.25s ease-in-out;
+
+  &.add:hover {
+    color: $colorSuccess;
+  }
+
+  &.remove:hover {
+    color: $colorRed;
+  }
 }
 
 .currency-title {

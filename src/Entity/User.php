@@ -141,4 +141,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function hasFavouriteCurrency(int $id): bool
+    {
+        foreach ($this->favouriteCurrencies as $currency) {
+            if ($currency->getId() === $id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
