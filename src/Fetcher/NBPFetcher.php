@@ -11,12 +11,20 @@ class NBPFetcher
     use ErrorHandler;
 
     private string $url = 'https://api.nbp.pl/api/exchangerates/tables/a/';
+    private string $date;
+
+    public function setDate(string $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
 
     public function fetch(): array
     {
         try {
-            $today = (new DateTime())->format('Y-m-d');
-            $this->url .= $today . '?format=json';
+            $date = $this->date ?? (new DateTime())->format('Y-m-d');
+            $this->url .= $date . '?format=json';
             $outcome = json_decode(file_get_contents($this->url), true)[0];
             return is_array($outcome) ? $outcome : [];
         } catch (Exception $e) {
