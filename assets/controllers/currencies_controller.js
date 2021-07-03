@@ -127,4 +127,10 @@ export default class extends Controller {
             console.error(outcome)
         }
     }
+
+    actionRemoveAll = (event) => {
+        if(!window.confirm("Czy na pewno chcesz usunąć wszystkie śledzone waluty?")){
+            event.preventDefault();
+        }
+    }
 }
