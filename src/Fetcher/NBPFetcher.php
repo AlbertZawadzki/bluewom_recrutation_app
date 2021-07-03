@@ -17,7 +17,8 @@ class NBPFetcher
         try {
             $today = (new DateTime())->format('Y-m-d');
             $this->url .= $today . '?format=json';
-            return json_decode(file_get_contents($this->url), true)[0];
+            $outcome = json_decode(file_get_contents($this->url), true)[0];
+            return is_array($outcome) ? $outcome : [];
         } catch (Exception $e) {
             $this->addNamedError('Request error', $e->getMessage());
             return [];
