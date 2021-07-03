@@ -26,7 +26,7 @@ export default class extends Controller {
                 this.userCurrencies.innerHTML = outcome.data.html.content;
                 this.userCurrencies.parentElement.classList.remove('missing');
                 this.userCurrencies.parentElement.childNodes[1].innerHTML = 'Twoje waluty:' +
-                    `<form method="post" action="/reset">
+                    `<form method="post" data-action="submit->currencies#actionRemoveAll" action="/reset">
                         <label class="delete-all-currencies-icon">
                             <input type="submit" class="hidden"/>
                             <i class="fas fa-trash-alt"></i>
