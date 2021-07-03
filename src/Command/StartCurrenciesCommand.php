@@ -56,6 +56,8 @@ class StartCurrenciesCommand extends Command
             $this->em->persist($currency);
         }
 
+        $this->em->flush();
+
         $io->success('Set currencies (' . count($currencies) . ') from date ' . $date);
 
         return Command::SUCCESS;
