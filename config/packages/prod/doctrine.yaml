@@ -1,5 +1,5 @@
 doctrine:
-  driver: pdo-pgsql
+  driver: pdo_pgsql
   server-version: '13'
   orm:
     auto_generate_proxy_classes: false
