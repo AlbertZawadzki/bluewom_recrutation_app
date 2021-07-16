@@ -78,6 +78,7 @@
     Production
 </h3>   
 <a href="http://bluewom.herokuapp.com/">Live on heroku</a>
+<b> Unfortunately https://remotemysql.com/ is dead, so I have used https://www.db4free.net/ (extremely slow hosting, latency reaches up to 2-3 seconds between db requests) </b>
 
 <h3> 
     Local start up 
