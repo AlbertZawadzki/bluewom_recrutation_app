@@ -1,6 +1,4 @@
 doctrine:
-  driver: pdo_pgsql
-  server-version: '13'
   orm:
     auto_generate_proxy_classes: false
     metadata_cache_driver:
