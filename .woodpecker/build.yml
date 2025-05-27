@@ -3,33 +3,33 @@ when:
   branch: master
 
 steps:
-  setup:
-    image: alpine
-    environment:
-      ENV_VARS:
-        from_secret: ENV_VARS
-    commands:
-      - echo "$ENV_VARS" > .env.prod
-
-  front:
-    image: node:14
-    commands:
-      - npm ci
-      - npm run build
-
-  backend:
-    image: php:8.1
-    depends_on:
-      - setup
-    commands:
-      - apt-get update && apt-get install -y git unzip libzip-dev
-      - docker-php-ext-install zip
-      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-      - rm composer-setup.php
-      - composer config --no-plugins allow-plugins true
-      - composer install --no-dev --optimize-autoloader --ignore-platform-req=*
-      - composer dump-env prod
+#  setup:
+#    image: alpine
+#    environment:
+#      ENV_VARS:
+#        from_secret: ENV_VARS
+#    commands:
+#      - echo "$ENV_VARS" > .env.prod
+#
+#  front:
+#    image: node:14
+#    commands:
+#      - npm ci
+#      - npm run build
+#
+#  backend:
+#    image: php:8.1
+#    depends_on:
+#      - setup
+#    commands:
+#      - apt-get update && apt-get install -y git unzip libzip-dev
+#      - docker-php-ext-install zip
+#      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+#      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+#      - rm composer-setup.php
+#      - composer config --no-plugins allow-plugins true
+#      - composer install --no-dev --optimize-autoloader --ignore-platform-req=*
+#      - composer dump-env prod
 
   pack:
     depends_on:
@@ -46,12 +46,12 @@ steps:
     environment:
       SSH_PRIVATE_KEY:
         from_secret: SSH_PRIVATE_KEY
-      UPLOAD: azaw@172.26.214.158:/home/azaw/projects/deploy-upload/
+      UPLOAD_CONN: azaw@172.26.214.158:/home/azaw/projects/deploy-upload
     commands:
       - apk add --no-cache openssh-client rsync
       - mkdir -p ~/.ssh
       - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz ${UPLOAD}
-      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz "${UPLOAD}build-$(date +%s).tar.gz"
+      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz "${UPLOAD_CONN}/_current.tar.gz"
+      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz "${UPLOAD_CONN}/build-$(date +%s).tar.gz"
