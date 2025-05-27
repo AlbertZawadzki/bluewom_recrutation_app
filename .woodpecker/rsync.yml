@@ -11,7 +11,7 @@ matrix:
     - azaw@172.26.214.158:/home/azaw/projects/deploy-target-2/
 
 steps:
-  download-artifacts:
+  download:
     image: alpine
     commands:
       - wget https://woodpecker.example.com/api/repos/<owner>/<repo>/builds/<build_number>/artifacts/build-artifacts.tar.gz

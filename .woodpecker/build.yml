@@ -32,7 +32,7 @@ steps:
       - composer install --no-dev --optimize-autoloader --ignore-platform-req=*
       - composer dump-env prod
 
-  pack:
+  upload:
     depends_on:
       - backend
       - front
