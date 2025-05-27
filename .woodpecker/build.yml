@@ -32,7 +32,7 @@ steps:
       - composer install --no-dev --optimize-autoloader --ignore-platform-req=*
       - composer dump-env prod
 
-  upload:
+  pack:
     depends_on:
       - backend
       - front
@@ -41,3 +41,17 @@ steps:
       - tar czf artifacts.tar.gz $CI_WORKSPACE
     artifacts:
       - artifacts.tar.gz
+
+  upload:
+    image: alpine
+    environment:
+      SSH_PRIVATE_KEY:
+        from_secret: SSH_PRIVATE_KEY
+      UPLOAD: azaw@172.26.214.158:/home/azaw/projects/deploy-upload/
+    commands:
+      - apk add --no-cache openssh-client rsync
+      - mkdir -p ~/.ssh
+      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" artifacts.tar.gz ${UPLOAD}
