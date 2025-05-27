@@ -32,9 +32,9 @@ steps:
 #      - composer dump-env prod
 
   pack:
-    depends_on:
-      - backend
-      - front
+#    depends_on:
+#      - backend
+#      - front
     image: alpine
     commands:
       - tar czf _current.tar.gz $CI_WORKSPACE
