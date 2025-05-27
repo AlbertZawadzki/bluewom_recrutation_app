@@ -2,6 +2,9 @@ when:
   event: manual
   branch: master
 
+depends_on:
+  - setup
+
 steps:
   backend:
     image: php:8.1
@@ -14,6 +17,3 @@ steps:
       - composer config --no-plugins allow-plugins true
       - composer install --no-dev --optimize-autoloader --ignore-platform-req=*
       - composer dump-env prod
-
-depends_on:
-  - setup

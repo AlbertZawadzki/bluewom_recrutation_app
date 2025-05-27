@@ -10,6 +10,3 @@ steps:
         from_secret: ENV_VARS
     commands:
       - echo "$ENV_VARS" > .env.prod
-
-depends_on:
-  - clone
