@@ -12,13 +12,6 @@ matrix:
     - azaw@172.26.214.158:/home/azaw/projects/deploy-target-2/
 
 steps:
-  download:
-    image: alpine
-    commands:
-      - apk add --no-cache openssh-client
-      - scp azaw@172.26.214.158:/home/azaw/projects/deploy-upload/_current.tar.gz .
-      - tar xzf _current.tar.gz
-
   rsync:
     image: alpine
     depends_on:
@@ -32,4 +25,6 @@ steps:
       - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - scp azaw@172.26.214.158:/home/azaw/projects/deploy-upload/_current.tar.gz .
+      - tar xzf _current.tar.gz
       - rsync -avz --exclude-from="$CI_WORKSPACE/.woodpecker/rsync-ignore" -e "ssh -i ~/.ssh/id_rsa" "$CI_WORKSPACE/" ${SERVER}

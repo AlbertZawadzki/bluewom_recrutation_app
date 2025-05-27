@@ -14,3 +14,4 @@ phpunit.xml.dist
 symfony.lock
 webpack.config.js
 .woodpecker
+*.tar.gz
