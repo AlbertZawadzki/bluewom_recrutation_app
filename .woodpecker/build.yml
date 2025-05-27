@@ -2,8 +2,13 @@ when:
   event: manual
   branch: master
 
+matrix:
+  SERVER:
+    - azaw@172.26.214.158:/home/azaw/projects/deploy-target/
+    - azaw@172.26.214.158:/home/azaw/projects/deploy-target-2/
+
 steps:
-  setup-env:
+  setup:
     image: alpine
     environment:
       ENV_VARS:
@@ -19,6 +24,8 @@ steps:
 
   backend:
     image: php:8.1
+    depends_on:
+      - setup
     commands:
       - apt-get update && apt-get install -y git unzip libzip-dev
       - docker-php-ext-install zip
@@ -34,10 +41,13 @@ steps:
     environment:
       SSH_PRIVATE_KEY:
         from_secret: SSH_PRIVATE_KEY
+    depends_on:
+      - front
+      - backend
     commands:
       - apk add --no-cache openssh-client rsync
       - mkdir -p ~/.ssh
       - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-      - rsync -avz --exclude-from="$CI_WORKSPACE/.woodpecker/rsync-ignore" -e "ssh -i ~/.ssh/id_rsa" "$CI_WORKSPACE/" azaw@172.26.214.158:/home/azaw/projects/deploy-target/
+      - rsync -avz --exclude-from="$CI_WORKSPACE/.woodpecker/rsync-ignore" -e "ssh -i ~/.ssh/id_rsa" "$CI_WORKSPACE/" ${SERVER}

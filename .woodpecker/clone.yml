@@ -1,7 +1,0 @@
-when:
-  event: manual
-  branch: master
-
-steps:
-  clone:
-    image: alpine
