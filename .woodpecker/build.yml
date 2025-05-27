@@ -5,7 +5,7 @@ when:
 matrix:
   SERVER:
     - azaw@172.26.214.158:/home/azaw/projects/deploy-target/
-#    - azaw@172.26.214.158:/home/azaw/projects/deploy-target-2/
+    - azaw@172.26.214.158:/home/azaw/projects/deploy-target-2/
 
 steps:
   setup:
@@ -15,18 +15,6 @@ steps:
         from_secret: ENV_VARS
     commands:
       - echo "$ENV_VARS" > .env.prod
-
-  ssh:
-    image: alpine
-    environment:
-      SSH_PRIVATE_KEY:
-        from_secret: SSH_PRIVATE_KEY
-    commands:
-      - apk add --no-cache openssh-client
-      - mkdir -p ~/.ssh
-      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-      - chmod 600 ~/.ssh/id_rsa
-      - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 
   front:
     image: node:14
@@ -50,10 +38,16 @@ steps:
 
   rsync:
     image: alpine
+    environment:
+      SSH_PRIVATE_KEY:
+        from_secret: SSH_PRIVATE_KEY
     depends_on:
-      - ssh
       - front
       - backend
     commands:
-      - apk add --no-cache rsync
+      - apk add --no-cache openssh-client rsync
+      - mkdir -p ~/.ssh
+      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
       - rsync -avz --exclude-from="$CI_WORKSPACE/.woodpecker/rsync-ignore" -e "ssh -i ~/.ssh/id_rsa" "$CI_WORKSPACE/" ${SERVER}
