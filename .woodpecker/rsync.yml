@@ -5,6 +5,7 @@ when:
 skip_clone: true
 depends_on:
   - build
+
 matrix:
   SERVER:
     - azaw@172.26.214.158:/home/azaw/projects/deploy-target/
