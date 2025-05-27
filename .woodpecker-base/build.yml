@@ -1,0 +1,43 @@
+when:
+  event: manual
+  branch: master
+
+steps:
+  setup-env:
+    image: alpine
+    environment:
+      ENV_VARS:
+        from_secret: ENV_VARS
+    commands:
+      - echo "$ENV_VARS" > .env.prod
+
+  front:
+    image: node:14
+    commands:
+      - npm ci
+      - npm run build
+
+  backend:
+    image: php:8.1
+    commands:
+      - apt-get update && apt-get install -y git unzip libzip-dev
+      - docker-php-ext-install zip
+      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+      - rm composer-setup.php
+      - composer config --no-plugins allow-plugins true
+      - composer install --no-dev --optimize-autoloader --ignore-platform-req=*
+      - composer dump-env prod
+
+  rsync:
+    image: alpine
+    environment:
+      SSH_PRIVATE_KEY:
+        from_secret: SSH_PRIVATE_KEY
+    commands:
+      - apk add --no-cache openssh-client rsync
+      - mkdir -p ~/.ssh
+      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - rsync -avz --exclude-from="$CI_WORKSPACE/.woodpecker/rsync-ignore" -e "ssh -i ~/.ssh/id_rsa" "$CI_WORKSPACE/" azaw@172.26.214.158:/home/azaw/projects/deploy-target/
