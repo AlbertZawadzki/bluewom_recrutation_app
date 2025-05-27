@@ -10,6 +10,7 @@ steps:
         from_secret: ENV_VARS
     commands:
       - echo "$ENV_VARS" > .env.prod
+      - touch "build-$(date +%Y%m%d%H%M%S)"
 
   front:
     image: node:14
