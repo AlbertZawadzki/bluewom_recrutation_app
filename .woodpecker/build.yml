@@ -16,6 +16,18 @@ steps:
     commands:
       - echo "$ENV_VARS" > .env.prod
 
+  ssh:
+    image: alpine
+    environment:
+      SSH_PRIVATE_KEY:
+        from_secret: SSH_PRIVATE_KEY
+    commands:
+      - apk add --no-cache openssh-client
+      - mkdir -p ~/.ssh
+      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+
   front:
     image: node:14
     commands:
@@ -38,16 +50,10 @@ steps:
 
   rsync:
     image: alpine
-    environment:
-      SSH_PRIVATE_KEY:
-        from_secret: SSH_PRIVATE_KEY
     depends_on:
+      - ssh
       - front
       - backend
     commands:
-      - apk add --no-cache openssh-client rsync
-      - mkdir -p ~/.ssh
-      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-      - chmod 600 ~/.ssh/id_rsa
-      - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - apk add --no-cache rsync
       - rsync -avz --exclude-from="$CI_WORKSPACE/.woodpecker/rsync-ignore" -e "ssh -i ~/.ssh/id_rsa" "$CI_WORKSPACE/" ${SERVER}
