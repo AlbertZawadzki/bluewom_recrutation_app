@@ -10,7 +10,6 @@ steps:
         from_secret: ENV_VARS
     commands:
       - echo "$ENV_VARS" > .env.prod
-      - touch "build-$(date +%s)"
 
   front:
     image: node:14
@@ -38,9 +37,7 @@ steps:
       - front
     image: alpine
     commands:
-      - tar czf artifacts.tar.gz $CI_WORKSPACE
-    artifacts:
-      - artifacts.tar.gz
+      - tar czf _current.tar.gz $CI_WORKSPACE
 
   upload:
     image: alpine
@@ -56,4 +53,5 @@ steps:
       - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" artifacts.tar.gz ${UPLOAD}
+      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz ${UPLOAD}
+      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz "${UPLOAD}build-$(date +%s).tar.gz"

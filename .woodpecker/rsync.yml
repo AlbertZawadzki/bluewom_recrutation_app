@@ -15,8 +15,9 @@ steps:
   download:
     image: alpine
     commands:
-      - scp azaw@172.26.214.158:/home/azaw/projects/deploy-upload/artifacts.tar.gz .
-      - tar xzf artifacts.tar.gz
+      - apk add --no-cache scp
+      - scp azaw@172.26.214.158:/home/azaw/projects/deploy-upload/_current.tar.gz .
+      - tar xzf _current.tar.gz
 
   rsync:
     image: alpine
