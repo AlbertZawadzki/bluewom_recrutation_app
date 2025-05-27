@@ -2,13 +2,13 @@ when:
   event: manual
   branch: master
 
+skip_clone: true
+depends_on:
+  - build
 matrix:
   SERVER:
     - azaw@172.26.214.158:/home/azaw/projects/deploy-target/
     - azaw@172.26.214.158:/home/azaw/projects/deploy-target-2/
-
-depends_on:
-  - build
 
 steps:
   download-artifacts:
