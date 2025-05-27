@@ -14,8 +14,6 @@ matrix:
 steps:
   rsync:
     image: alpine
-    depends_on:
-      - download
     environment:
       SSH_PRIVATE_KEY:
         from_secret: SSH_PRIVATE_KEY
