@@ -2,6 +2,10 @@ when:
   event: manual
   branch: master
 
+skip_clone: true
+depends_on:
+  - clone
+
 steps:
   setup:
     image: alpine
@@ -10,12 +14,6 @@ steps:
         from_secret: ENV_VARS
     commands:
       - echo "$ENV_VARS" > .env.prod
-
-  front:
-    image: node:14
-    commands:
-      - npm ci
-      - npm run build
 
   backend:
     image: php:8.1
