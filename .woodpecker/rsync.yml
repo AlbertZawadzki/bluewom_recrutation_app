@@ -15,7 +15,7 @@ steps:
   download:
     image: alpine
     commands:
-      - apk add --no-cache scp
+      - apk add --no-cache openssh-client
       - scp azaw@172.26.214.158:/home/azaw/projects/deploy-upload/_current.tar.gz .
       - tar xzf _current.tar.gz
 
