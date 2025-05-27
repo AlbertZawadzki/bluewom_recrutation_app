@@ -2,7 +2,9 @@ when:
   event: manual
   branch: master
 
-depends_on: [ 'front', 'backend' ]
+depends_on:
+  - front
+  - backend
 
 steps:
   rsync:
