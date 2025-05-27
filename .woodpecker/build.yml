@@ -44,6 +44,8 @@ steps:
 
   upload:
     image: alpine
+    depends_on:
+      - pack
     environment:
       SSH_PRIVATE_KEY:
         from_secret: SSH_PRIVATE_KEY
