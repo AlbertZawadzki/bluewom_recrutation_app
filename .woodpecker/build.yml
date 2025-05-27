@@ -5,7 +5,7 @@ when:
 matrix:
   SERVER:
     - azaw@172.26.214.158:/home/azaw/projects/deploy-target/
-    - azaw@172.26.214.158:/home/azaw/projects/deploy-target-2/
+#    - azaw@172.26.214.158:/home/azaw/projects/deploy-target-2/
 
 steps:
   setup:
