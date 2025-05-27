@@ -2,10 +2,11 @@ when:
   event: manual
   branch: master
 
+depends_on: [ 'front', 'backend' ]
+
 steps:
   rsync:
     image: alpine
-    depends_on: [ 'front', 'backend' ]
     environment:
       SSH_PRIVATE_KEY:
         from_secret: SSH_PRIVATE_KEY

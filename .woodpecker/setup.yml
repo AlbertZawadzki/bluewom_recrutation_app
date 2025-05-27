@@ -2,10 +2,11 @@ when:
   event: manual
   branch: master
 
+depends_on: [ 'clone' ]
+
 steps:
   setup:
     image: alpine
-    depends_on: [ 'clone' ]
     environment:
       ENV_VARS:
         from_secret: ENV_VARS

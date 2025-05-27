@@ -2,10 +2,11 @@ when:
   event: manual
   branch: master
 
+depends_on: ['setup']
+
 steps:
   backend:
     image: php:8.1
-    depends_on: ['setup']
     commands:
       - apt-get update && apt-get install -y git unzip libzip-dev
       - docker-php-ext-install zip

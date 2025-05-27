@@ -2,10 +2,11 @@ when:
   event: manual
   branch: master
 
+depends_on: [ 'clone' ]
+
 steps:
   front:
     image: node:14
-    depends_on: [ 'clone' ]
     commands:
       - npm ci
       - npm run build
