@@ -3,38 +3,38 @@ when:
   branch: master
 
 steps:
-#  setup:
-#    image: alpine
-#    environment:
-#      ENV_VARS:
-#        from_secret: ENV_VARS
-#    commands:
-#      - echo "$ENV_VARS" > .env.prod
-#
-#  front:
-#    image: node:14
-#    commands:
-#      - npm ci
-#      - npm run build
-#
-#  backend:
-#    image: php:8.1
-#    depends_on:
-#      - setup
-#    commands:
-#      - apt-get update && apt-get install -y git unzip libzip-dev
-#      - docker-php-ext-install zip
-#      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-#      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-#      - rm composer-setup.php
-#      - composer config --no-plugins allow-plugins true
-#      - composer install --no-dev --optimize-autoloader --ignore-platform-req=*
-#      - composer dump-env prod
+  setup:
+    image: alpine
+    environment:
+      ENV_VARS:
+        from_secret: ENV_VARS
+    commands:
+      - echo "$ENV_VARS" > .env.prod
+
+  front:
+    image: node:14
+    commands:
+      - npm ci
+      - npm run build
+
+  backend:
+    image: php:8.1
+    depends_on:
+      - setup
+    commands:
+      - apt-get update && apt-get install -y git unzip libzip-dev
+      - docker-php-ext-install zip
+      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+      - rm composer-setup.php
+      - composer config --no-plugins allow-plugins true
+      - composer install --no-dev --optimize-autoloader --ignore-platform-req=*
+      - composer dump-env prod
 
   pack:
-#    depends_on:
-#      - backend
-#      - front
+    depends_on:
+      - backend
+      - front
     image: alpine
     commands:
       - tar czf _current.tar.gz $CI_WORKSPACE
