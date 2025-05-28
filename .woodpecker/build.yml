@@ -37,7 +37,7 @@ steps:
 #      - front
     image: alpine
     commands:
-      - tar czf _current.tar.gz $CI_WORKSPACE
+      - tar czf _current.tar.gz .
 
   upload:
     image: alpine
