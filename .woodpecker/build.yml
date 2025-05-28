@@ -46,7 +46,7 @@ steps:
     environment:
       SSH_PRIVATE_KEY:
         from_secret: SSH_PRIVATE_KEY
-      UPLOAD_CONN: azaw@172.26.214.158:/home/azaw/projects/deploy-upload
+      UPLOAD_CONN: "azaw@172.26.214.158:/home/azaw/projects/deploy-upload"
     commands:
       - apk add --no-cache openssh-client rsync
       - mkdir -p ~/.ssh
