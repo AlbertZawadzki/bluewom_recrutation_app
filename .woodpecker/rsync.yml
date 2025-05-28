@@ -26,3 +26,7 @@ steps:
       - scp azaw@172.26.214.158:/home/azaw/projects/deploy-upload/_current.tar.gz .
       - tar xzf _current.tar.gz -C .
       - ls -lta
+      - pwd
+      - ls "$CI_WORKSPACE"
+#      - rsync -avz --exclude-from="$CI_WORKSPACE/.woodpecker/rsync-ignore" -e "ssh -i ~/.ssh/id_rsa" "$CI_WORKSPACE/" ${SERVER}
+
