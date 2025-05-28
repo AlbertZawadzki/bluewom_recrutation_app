@@ -53,6 +53,5 @@ steps:
       - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
       - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-      - echo -e "Dupa $UPLOAD_CONN"
-#      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz "$UPLOAD_CONN/_current.tar.gz"
-#      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz "$UPLOAD_CONN/build-$(date +%s).tar.gz"
+      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz "$UPLOAD_CONN/_current.tar.gz"
+      - rsync -avz -e "ssh -i ~/.ssh/id_rsa" _current.tar.gz "$UPLOAD_CONN/build-$(date +%s).tar.gz"
